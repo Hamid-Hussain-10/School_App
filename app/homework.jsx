@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -7,32 +7,46 @@ import {
   TouchableOpacity,
   TextInput,
   Modal,
+  Alert,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const initialHomework = [
-  {
-    id: '1',
-    subject: 'Math',
-    dueDate: 'July 30, 2025',
-    task: 'Solve exercise 4.2 from the book',
-    status: 'pending',
-  },
-  {
-    id: '2',
-    subject: 'English',
-    dueDate: 'July 28, 2025',
-    task: 'Write an essay on "My Favourite Book"',
-    status: 'done',
-  },
-];
+const STORAGE_KEY = 'homework_list';
 
 const HomeworkScreen = () => {
-  const [homeworks, setHomeworks] = useState(initialHomework);
+  const [homeworks, setHomeworks] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [newSubject, setNewSubject] = useState('');
   const [newTask, setNewTask] = useState('');
   const [newDate, setNewDate] = useState('');
+
+  useEffect(() => {
+    loadHomework();
+  }, []);
+
+  useEffect(() => {
+    saveHomework(homeworks);
+  }, [homeworks]);
+
+  const saveHomework = async (data) => {
+    try {
+      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    } catch (error) {
+      console.error('Failed to save homework:', error);
+    }
+  };
+
+  const loadHomework = async () => {
+    try {
+      const stored = await AsyncStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        setHomeworks(JSON.parse(stored));
+      }
+    } catch (error) {
+      console.error('Failed to load homework:', error);
+    }
+  };
 
   const toggleStatus = (id) => {
     const updated = homeworks.map((hw) =>
@@ -44,7 +58,10 @@ const HomeworkScreen = () => {
   };
 
   const addHomework = () => {
-    if (!newSubject || !newTask || !newDate) return;
+    if (!newSubject || !newTask || !newDate) {
+      Alert.alert('Please fill all fields');
+      return;
+    }
 
     const newHW = {
       id: Date.now().toString(),
@@ -63,7 +80,7 @@ const HomeworkScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.header}> Homework </Text>
+      <Text style={styles.header}> Homework</Text>
 
       <FlatList
         data={homeworks}
@@ -95,7 +112,7 @@ const HomeworkScreen = () => {
         style={styles.addButton}
         onPress={() => setModalVisible(true)}
       >
-        <Text style={styles.addButtonText}> + </Text>
+        <Text style={styles.addButtonText}>＋</Text>
       </TouchableOpacity>
 
       <Modal
@@ -129,7 +146,7 @@ const HomeworkScreen = () => {
 
             <View style={styles.modalButtons}>
               <TouchableOpacity style={styles.saveButton} onPress={addHomework}>
-                <Text style={{ color: '#333', fontWeight: 'bold' }}>
+                <Text style={{ color: 'white', fontWeight: 'bold' }}>
                   Save
                 </Text>
               </TouchableOpacity>
@@ -149,7 +166,6 @@ const HomeworkScreen = () => {
   );
 };
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -160,14 +176,13 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#000000',
+    color: '#333',
     textAlign: 'center',
     marginBottom: 20,
   },
   card: {
     backgroundColor: '#fff',
-    borderRadius: 35,
-    borderBottomEndRadius: 0,
+    borderRadius: 12,
     padding: 16,
     marginBottom: 16,
     elevation: 3,
@@ -191,12 +206,12 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   pending: {
-    backgroundColor: '#ffffff',
-    color: '#060606',
+    backgroundColor: '#ffe0b3',
+    color: '#d35400',
   },
   done: {
-    backgroundColor: '#ffffff',
-    color: '#026b07',
+    backgroundColor: '#d4edda',
+    color: '#2e7d32',
   },
   task: {
     fontSize: 16,
@@ -209,8 +224,8 @@ const styles = StyleSheet.create({
   },
   addButton: {
     position: 'absolute',
-    bottom: 50,
-    right: 30,
+    bottom: 30,
+    right: 25,
     backgroundColor: '#2a4d9c',
     borderRadius: 40,
     width: 60,
@@ -230,8 +245,8 @@ const styles = StyleSheet.create({
   },
   modalBox: {
     margin: 30,
-    backgroundColor: '#4dbeca',
-    borderRadius: 16,
+    backgroundColor: '#fff',
+    borderRadius: 12,
     padding: 20,
     elevation: 10,
   },
@@ -239,12 +254,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '700',
     marginBottom: 12,
-    color: '#131314',
+    color: '#2a4d9c',
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ffffff',
-    borderRadius: 16,
+    borderColor: '#ccc',
+    borderRadius: 8,
     padding: 10,
     marginBottom: 12,
     fontSize: 16,
@@ -254,16 +269,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   saveButton: {
-    backgroundColor: '#FCC300',
+    backgroundColor: '#2a4d9c',
     paddingVertical: 10,
     paddingHorizontal: 20,
-    borderRadius: 10,
+    borderRadius: 8,
   },
   cancelButton: {
     backgroundColor: '#eee',
     paddingVertical: 10,
     paddingHorizontal: 20,
-    borderRadius: 10,
+    borderRadius: 8,
   },
 });
 

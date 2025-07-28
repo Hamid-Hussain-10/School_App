@@ -53,9 +53,8 @@ const TimeTableScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.header}>📘 Time Table</Text>
+      <Text style={styles.header}> Time Table</Text>
 
-      {/* Tab Buttons */}
       <View style={styles.tabContainer}>
         {days.map((day) => (
           <TouchableOpacity
@@ -78,7 +77,6 @@ const TimeTableScreen = () => {
         ))}
       </View>
 
-      {/* Day Schedule */}
       <View style={styles.scheduleContainer}>
         <Text style={styles.dayTitle}>{selectedDay}</Text>
         <FlatList
