@@ -1,55 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
   FlatList,
   TouchableOpacity,
-} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+  Image,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const timetable = {
   Monday: [
-    { subject: 'Math', time: '8:00 AM - 8:45 AM' },
-    { subject: 'English', time: '8:45 AM - 9:30 AM' },
-    { subject: 'Science', time: '9:30 AM - 10:15 AM' },
-    { subject: 'Break', time: '10:15 AM - 10:30 AM' },
-    { subject: 'Computer', time: '10:30 AM - 11:15 AM' },
+    { subject: "Math", time: "8:00 AM - 8:45 AM" },
+    { subject: "English", time: "8:45 AM - 9:30 AM" },
+    { subject: "Science", time: "9:30 AM - 10:15 AM" },
+    { subject: "Break", time: "10:15 AM - 10:30 AM" },
+    { subject: "Computer", time: "10:30 AM - 11:15 AM" },
   ],
   Tuesday: [
-    { subject: 'English', time: '8:00 AM - 8:45 AM' },
-    { subject: 'Math', time: '8:45 AM - 9:30 AM' },
-    { subject: 'Social Studies', time: '9:30 AM - 10:15 AM' },
-    { subject: 'Break', time: '10:15 AM - 10:30 AM' },
-    { subject: 'Science', time: '10:30 AM - 11:15 AM' },
+    { subject: "English", time: "8:00 AM - 8:45 AM" },
+    { subject: "Math", time: "8:45 AM - 9:30 AM" },
+    { subject: "Social Studies", time: "9:30 AM - 10:15 AM" },
+    { subject: "Break", time: "10:15 AM - 10:30 AM" },
+    { subject: "Science", time: "10:30 AM - 11:15 AM" },
   ],
   Wednesday: [
-    { subject: 'Science', time: '8:00 AM - 8:45 AM' },
-    { subject: 'Urdu', time: '8:45 AM - 9:30 AM' },
-    { subject: 'English', time: '9:30 AM - 10:15 AM' },
-    { subject: 'Break', time: '10:15 AM - 10:30 AM' },
-    { subject: 'Math', time: '10:30 AM - 11:15 AM' },
+    { subject: "Science", time: "8:00 AM - 8:45 AM" },
+    { subject: "Urdu", time: "8:45 AM - 9:30 AM" },
+    { subject: "English", time: "9:30 AM - 10:15 AM" },
+    { subject: "Break", time: "10:15 AM - 10:30 AM" },
+    { subject: "Math", time: "10:30 AM - 11:15 AM" },
   ],
   Thursday: [
-    { subject: 'Computer', time: '8:00 AM - 8:45 AM' },
-    { subject: 'Math', time: '8:45 AM - 9:30 AM' },
-    { subject: 'Islamiat', time: '9:30 AM - 10:15 AM' },
-    { subject: 'Break', time: '10:15 AM - 10:30 AM' },
-    { subject: 'Art', time: '10:30 AM - 11:15 AM' },
+    { subject: "Computer", time: "8:00 AM - 8:45 AM" },
+    { subject: "Math", time: "8:45 AM - 9:30 AM" },
+    { subject: "Islamiat", time: "9:30 AM - 10:15 AM" },
+    { subject: "Break", time: "10:15 AM - 10:30 AM" },
+    { subject: "Art", time: "10:30 AM - 11:15 AM" },
   ],
   Friday: [
-    { subject: 'Urdu', time: '8:00 AM - 8:45 AM' },
-    { subject: 'English', time: '8:45 AM - 9:30 AM' },
-    { subject: 'Break', time: '9:30 AM - 9:45 AM' },
-    { subject: 'Sports', time: '9:45 AM - 10:30 AM' },
-    { subject: 'Quran', time: '10:30 AM - 11:15 AM' },
+    { subject: "Urdu", time: "8:00 AM - 8:45 AM" },
+    { subject: "English", time: "8:45 AM - 9:30 AM" },
+    { subject: "Break", time: "9:30 AM - 9:45 AM" },
+    { subject: "Sports", time: "9:45 AM - 10:30 AM" },
+    { subject: "Quran", time: "10:30 AM - 11:15 AM" },
   ],
 };
 
 const days = Object.keys(timetable);
 
 const TimeTableScreen = () => {
-  const [selectedDay, setSelectedDay] = useState('Monday');
+  const [selectedDay, setSelectedDay] = useState("Monday");
 
   return (
     <SafeAreaView style={styles.container}>
@@ -90,6 +91,13 @@ const TimeTableScreen = () => {
           )}
         />
       </View>
+      <View>
+        <Image
+          source={require("../assets/images/hwimg.png")}
+          style={styles.hwimg}
+          resizeMode="contain"
+        />
+      </View>
     </SafeAreaView>
   );
 };
@@ -97,24 +105,23 @@ const TimeTableScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FCC300',
+    backgroundColor: "#FCC300",
     paddingHorizontal: 16,
-    paddingTop: 10,
   },
   header: {
     fontSize: 28,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: '#333',
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "#333",
     marginBottom: 10,
   },
   tabContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    justifyContent: "space-around",
     marginVertical: 12,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 10,
-    padding: 6,
+    padding: 8,
   },
   tabButton: {
     paddingVertical: 8,
@@ -122,48 +129,52 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   activeTabButton: {
-    backgroundColor: '#2a4d9c',
+    backgroundColor: "#2a4d9c",
   },
   tabText: {
     fontSize: 14,
-    fontWeight: '600',
-    color: '#2a4d9c',
+    fontWeight: "600",
+    color: "#2a4d9c",
   },
   activeTabText: {
-    color: '#fff',
+    color: "#fff",
   },
   scheduleContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 12,
     padding: 16,
     elevation: 23,
   },
   dayTitle: {
     fontSize: 22,
-    fontWeight: '700',
-    color: '#2a4d9c',
+    fontWeight: "700",
+    color: "#2a4d9c",
     marginBottom: 10,
     borderBottomWidth: 2,
     paddingVertical: 8,
-    textAlign: 'center',
+    textAlign: "center",
   },
   subjectRow: {
     borderBottomWidth: 1,
-    borderBottomColor: '#b3aeae',
+    borderBottomColor: "#b3aeae",
     paddingVertical: 18,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignContent: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignContent: "center",
   },
   subjectText: {
     fontSize: 18,
-    fontWeight: '600',
-    color: '#333',
+    fontWeight: "600",
+    color: "#333",
   },
   timeText: {
     fontSize: 14,
-    color: '#666',
+    color: "#666",
     marginTop: 4,
+  },
+  hwimg: {
+    width: "100%",
+    height: "50%",
   },
 });
 

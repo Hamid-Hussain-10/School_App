@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View,
   ImageBackground,
+  Image,
 } from "react-native";
 
 const Dashboard = () => {
@@ -61,15 +62,11 @@ const Dashboard = () => {
           <Text style={styles.para}>Attendance</Text>
           <Text style={styles.spara}>Full</Text>
         </TouchableOpacity>
-
-        <TouchableOpacity
-          style={{ ...styles.div, backgroundColor: "#6a0665" }}
-          onPress={() => router.push("/assignment")}
-        >
-          <FontAwesome name="file-text" size={45} color="#ffffff" />
-          <Text style={styles.para}>Assignment</Text>
-          <Text style={styles.spara}>Attach</Text>
-        </TouchableOpacity>
+         <Image
+      source={require("../../assets/images/dashimg.png")}
+      style={styles.dashimage}
+      resizeMode="contain"
+    />
       </View>
     </ImageBackground>
   );
@@ -138,5 +135,9 @@ const styles = StyleSheet.create({
     fontSize: 26,
     fontWeight: "bold",
     color: "#000000",
+  },
+  dashimage: {
+    width : '100%',
+    height: '40%',
   },
 });
