@@ -59,5 +59,3 @@ GitHub: Hamid-Hussain-10
 LinkedIn: Hamid Hussain
 
 Made with ❤️ by Hamid Hussain
-
-Let me know if you'd like the markdown file as a `.md` download or want to include a live demo link or video preview as well.
