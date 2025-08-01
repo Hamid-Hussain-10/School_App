@@ -10,6 +10,7 @@ import {
 import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Signup = () => {
   const [secure, setSecure] = useState(true);
@@ -31,7 +32,7 @@ const Signup = () => {
     );
   };
 
-  const handleSignup = () => {
+  const handleSignup = async () => {
     const emptyField = formFields.find((f) => f.value.trim() === "");
     if (emptyField) {
       Alert.alert("Error", `${emptyField.placeholder} is required.`);
@@ -48,11 +49,14 @@ const Signup = () => {
     const formData = {};
     formFields.forEach((f) => (formData[f.name] = f.value));
 
-    Alert.alert("Success", "You have signed up successfully!");
-    console.log("Submitted Data:", formData);
-
-    // Navigate to Login
-    router.replace("/login"); 
+    try {
+      await AsyncStorage.setItem("userProfile", JSON.stringify(formData));
+      Alert.alert("Success", "You have signed up successfully!");
+      router.replace("/login");
+    } catch (error) {
+      Alert.alert("Error", "Failed to save user data.");
+      console.log(error);
+    }
   };
 
   return (

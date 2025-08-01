@@ -70,7 +70,7 @@ export default function TabsLayout() {
           title: "Profile",
           headerShown: false,
           tabBarIcon: ({ color }) => {
-            return <AntDesign name="profile" size={23} color={color} />;
+            return <AntDesign name="user" size={23} color={color} />;
           },
         }}
       />
