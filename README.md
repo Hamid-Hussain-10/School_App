@@ -28,7 +28,7 @@ A beautifully designed mobile application built using React Native, crafted to h
 
 1. Clone the repo
 
-git clone https://github.com/yourusername/kids-school-app.git
+git clone https://github.com/Hamid-Hussain-10/School_App/
 cd kids-school-app
 
 npm install
